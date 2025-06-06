@@ -10,3 +10,12 @@ export type Menu = {
     elementsText: ElementsTextData,
     menuLocator: string
   };
+
+  export type SearchData = {
+    searchFieldLocator: string,
+    searchResultsLocator: string, 
+    resultsLinksLocator?: string,
+    textForSearch: string,
+    expectedTargetUrl: string,
+    isTimestampInUrl?: boolean
+  };
