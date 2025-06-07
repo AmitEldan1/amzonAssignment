@@ -1,15 +1,45 @@
 import { SearchData } from "../../../fixtures/types";
 
+Cypress.Commands.add(
+  "searchFor",
+  ({ searchFieldLocator, textForSearch }: SearchData) => {
+    cy.get(searchFieldLocator).clear().type(`${textForSearch}{enter}`);
+  },
+);
 
-Cypress.Commands.add("getFirstResultLink", (searchResultsLocator: string, resultsLinksLocator: string) => {
-    cy.get(searchResultsLocator).first().find(resultsLinksLocator).last();
+Cypress.Commands.add("getFirstResult", (searchResultsLocator: string) => {
+  cy.get(searchResultsLocator).first();
 });
 
-Cypress.Commands.add("verifyFirstResultNavigation", (searchData: SearchData) => {
-    const { searchResultsLocator, resultsLinksLocator, expectedTargetUrl, isTimestampInUrl} = searchData
+Cypress.Commands.add(
+  "getFirstResultLink",
+  (searchResultsLocator: string, resultsLinksLocator: string) => {
+    cy.getFirstResult(searchResultsLocator).then((firstResult) =>
+      cy.wrap(firstResult).find(resultsLinksLocator).last(),
+    );
+  },
+);
 
-    resultsLinksLocator && cy.getFirstResultLink(searchResultsLocator, resultsLinksLocator)
-        .click()
+Cypress.Commands.add(
+  "getAccessToProduct",
+  (searchResultsLocator: string, resultsLinksLocator: string) =>
+    resultsLinksLocator
+      ? cy.getFirstResultLink(searchResultsLocator, resultsLinksLocator)
+      : cy.getFirstResult(searchResultsLocator),
+);
 
-    cy.checkCurrentUrl(expectedTargetUrl, isTimestampInUrl);
-});
+Cypress.Commands.add(
+  "verifyFirstResultNavigation",
+  (searchData: SearchData) => {
+    const {
+      searchResultsLocator,
+      resultsLinksLocator,
+      expectedTargetUrl,
+      isTimestampInUrl,
+    } = searchData;
+
+    cy.getAccessToProduct(searchResultsLocator, resultsLinksLocator)
+      .click()
+      .checkCurrentUrl(expectedTargetUrl, isTimestampInUrl);
+  },
+);

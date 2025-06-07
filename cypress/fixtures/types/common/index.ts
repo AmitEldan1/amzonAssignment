@@ -6,16 +6,16 @@ export type ElementsTextData = {
 }[];
 
 export type Menu = {
-    navigationButtons: NavigationButtons,
-    elementsText: ElementsTextData,
-    menuLocator: string
-  };
+  navigationButtons: NavigationButtons;
+  elementsText: ElementsTextData;
+  menuLocator: string;
+};
 
-  export type SearchData = {
-    searchFieldLocator: string,
-    searchResultsLocator: string, 
-    resultsLinksLocator?: string,
-    textForSearch: string,
-    expectedTargetUrl: string,
-    isTimestampInUrl?: boolean
-  };
+export type SearchData = {
+  searchFieldLocator: string;
+  searchResultsLocator: string;
+  resultsLinksLocator?: string;
+  textForSearch: string;
+  expectedTargetUrl: string;
+  isTimestampInUrl?: boolean;
+};

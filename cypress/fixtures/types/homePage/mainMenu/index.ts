@@ -1,5 +1,4 @@
 export type NavigationButtons = {
-    optionText: string;
-    targetUrl: string;
-  }[];
-  
+  optionText: string;
+  targetUrl: string;
+}[];
